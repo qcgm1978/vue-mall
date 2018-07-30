@@ -9,15 +9,16 @@ axios.defaults.baseURL = 'http://localhost:3000';
 
 // http request 拦截器
 axios.interceptors.request.use(
-	config => {
-	    if (store.state.clientToken) {
-	        config.headers.Authorization = `Bearer ${store.state.clientToken}`;
-	    }
-	    return config;
-	},
-	err => {
-	    return Promise.reject(err);
-	}
+    config => {
+        if (store.state.clientToken) {
+            // console.log(store.state.clientToken)
+            config.headers.Authorization = `Bearer ${store.state.clientToken}`;
+        }
+        return config;
+    },
+    err => {
+        return Promise.reject(err);
+    }
 );
 
 // http response 拦截器
@@ -33,7 +34,7 @@ axios.interceptors.response.use(
                     store.commit(types.CLIENT_LOGOUT);
                     router.replace({
                         path: 'login',
-                        query: {redirect: router.currentRoute.fullPath}
+                        query: { redirect: router.currentRoute.fullPath }
                     })
             }
         }

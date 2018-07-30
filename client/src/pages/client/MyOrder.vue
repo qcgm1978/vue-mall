@@ -104,14 +104,14 @@ export default {
         this.orderList=data
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
     deleteOrder(orderId){
       const res = deleteOrder(orderId);
       res
       .then(()=>{
-        alert('删除订单成功！');
+        console.log('删除订单成功！');
         this.orderList.map((item,index)=>{
           if(item.id===orderId){
             this.orderList.splice(index,1);
@@ -119,7 +119,7 @@ export default {
         })
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 
@@ -127,7 +127,7 @@ export default {
       const res = pay(orderId);
       res
       .then(()=>{
-        alert('支付成功！');
+        console.log('支付成功！');
         this.orderList.map((item,index)=>{
           if(item.id===orderId){
             item.state = 1;
@@ -135,14 +135,14 @@ export default {
         })
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
     confirmReceive(orderId){
       const res = confirmReceive(orderId);
       res
       .then(()=>{
-        alert('确认收货成功！');
+        console.log('确认收货成功！');
         this.orderList.map((item,index)=>{
           if(item.id===orderId){
             item.state = 3;
@@ -150,7 +150,7 @@ export default {
         })
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 
@@ -171,7 +171,7 @@ export default {
     },
     sendComment(){
       if(this.curStar<=0 || this.comment==''){
-        alert('评分和评价不能为空！');
+        console.log('评分和评价不能为空！');
         return;
       }
       const res = sendComment({
@@ -184,7 +184,7 @@ export default {
       });
       res
       .then(()=>{
-        alert('评价成功！');
+        console.log('评价成功！');
         for(let order of this.orderList){
           if(order.id===this.curOrderId){
             order.hasComment = true;
@@ -193,7 +193,7 @@ export default {
         this.closePopup();
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
     setCurStar(star){

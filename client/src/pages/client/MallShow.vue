@@ -95,13 +95,13 @@ export default {
       }
     },
     searchTip(tip){
-      alert(tip)
+      console.log(tip)
     },
     searchTextChange(text){
     },
     searchConfirm(){
       if(this.searchText.trim().length<=0){
-        alert('输入不能为空！');
+        console.log('输入不能为空！');
         return;
       }
       this.navTo(`/mall/show/goodsList/0/${this.searchText}`);
@@ -131,7 +131,7 @@ export default {
       this.typeList = data;
     })
     .catch((e)=>{
-      alert(e);
+      console.log(e);
     });
 
     //监听滚动事件

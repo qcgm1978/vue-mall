@@ -82,7 +82,7 @@ export default {
   			this.noReplyMsgList = msgs;
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	},
   	getRepliedMsg(){
@@ -91,7 +91,7 @@ export default {
   			this.repliedMsgList = msgs;
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	},
   	reply(id){
@@ -110,7 +110,7 @@ export default {
   		});
   		res
   		.then(()=>{
-  			alert('回复成功!');
+  			console.log('回复成功!');
   			this.noReplyMsgList.map((item,index)=>{
   				if(item.id===this.curMsgId){
   					this.noReplyMsgList.splice(index,1);
@@ -119,7 +119,7 @@ export default {
   			this.closePopup();
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	},
   },

@@ -60,10 +60,10 @@ export default {
   			this.oldPwd = '';
   			this.newPwd = '';
   			this.confirmPwd = '';
-  			alert('修改成功！');
+  			console.log('修改成功！');
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	}
   }

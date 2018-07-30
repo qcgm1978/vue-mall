@@ -90,7 +90,7 @@ export default {
         this.temStateId = order.curState.id;
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 
@@ -107,11 +107,11 @@ export default {
       });
       res
       .then(()=>{
-        alert('修改成功');
+        console.log('修改成功');
         this.fetchOrderDetail(this.$route.params.id);
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     }
   },

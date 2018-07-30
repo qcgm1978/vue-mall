@@ -48,7 +48,7 @@ export default {
         this.$router.push('/backstage');
       })
       .catch((e)=>{
-        alert('登录失败')
+        console.log('登录失败')
       })
     }
   }

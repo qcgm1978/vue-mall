@@ -54,7 +54,7 @@ export default {
   			this.orderList = orders;
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	},
   	editOrder(id){
@@ -64,7 +64,7 @@ export default {
   		const res = deleteOrder(id);
   		res
   		.then(()=>{
-  			alert('删除成功');
+  			console.log('删除成功');
   			this.orderList.map((item,index)=>{
   				if(item.id===id){
   					this.orderList.splice(index,1);
@@ -72,7 +72,7 @@ export default {
   			})
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	}
   },

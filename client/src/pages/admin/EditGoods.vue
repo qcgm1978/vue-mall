@@ -89,7 +89,7 @@ export default {
         this.types = data;
       })
       .catch((e)=>{
-        alert(e)
+        console.log(e)
       })
     },
     back(){
@@ -106,10 +106,10 @@ export default {
         });
         res
         .then(()=>{
-          alert('创建商品成功！')
+          console.log('创建商品成功！')
         })
         .catch((e)=>{
-          alert(e);
+          console.log(e);
         })
       }else{
         const res = updateGoods({
@@ -122,10 +122,10 @@ export default {
         });
         res
         .then(()=>{
-          alert('修改成功！')
+          console.log('修改成功！')
         })
         .catch((e)=>{
-          alert(e);
+          console.log(e);
         })
       }
     },
@@ -155,7 +155,7 @@ export default {
           this.closePopup();
         })
         .catch((e)=>{
-          alert(e);
+          console.log(e);
         })
       }
     },
@@ -183,7 +183,7 @@ export default {
           })
         })
         .catch((e)=>{
-          alert(e);
+          console.log(e);
         })
       }
     }
@@ -205,7 +205,7 @@ export default {
         this.specList = data.specs;
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     }
   }

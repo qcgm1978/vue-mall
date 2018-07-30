@@ -44,7 +44,7 @@ export default {
   		this.userList = users;
   	})
   	.catch((e)=>{
-  		alert(e)
+  		console.log(e)
   	})
   },
   methods:{
@@ -52,7 +52,7 @@ export default {
   		const res = deleteUser(id);
   		res
   		.then(()=>{
-  			alert('删除成功');
+  			console.log('删除成功');
   			this.userList.map((item,index)=>{
   				if(item.id===id){
   					this.userList.splice(index,1);
@@ -60,7 +60,7 @@ export default {
   			})
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	},
   	searchUser(){
@@ -71,7 +71,7 @@ export default {
   			this.userList = data;
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	},
   }

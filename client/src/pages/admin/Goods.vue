@@ -68,7 +68,7 @@ export default {
   			this.goodsList = goods;
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	},
   	getTypes(){
@@ -78,7 +78,7 @@ export default {
   			this.changeTag(this.curIndex);
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	},
   	addType(){
@@ -94,12 +94,12 @@ export default {
   		});
   		res
   		.then(()=>{
-  			alert('添加成功!');
+  			console.log('添加成功!');
   			this.getTypes();
   			this.closePopup();
   		})
   		.catch((e)=>{
-  			alert(e);
+  			console.log(e);
   		})
   	},
   	navTo(route){
@@ -116,7 +116,7 @@ export default {
         })
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
   },

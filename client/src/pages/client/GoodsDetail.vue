@@ -184,7 +184,7 @@ export default {
         this.getTypeGoodsList(data.typeId);
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 
@@ -195,7 +195,7 @@ export default {
         this.msgList=data
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 
@@ -222,13 +222,13 @@ export default {
         this.askContent = '';
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 
     addToCart(){
       if(!this.clientToken){
-        alert('请先登录！');
+        console.log('请先登录！');
         return;
       }
       const res = addOrder({
@@ -240,16 +240,16 @@ export default {
       });
       res
       .then(()=>{
-        alert('加入购物车成功！请前往 个人中心->购物车 结算')
+        console.log('加入购物车成功！请前往 个人中心->购物车 结算')
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 
     buy(){
       if(!this.clientToken){
-        alert('请先登录！');
+        console.log('请先登录！');
         return;
       }
       const res = addOrder({
@@ -261,10 +261,10 @@ export default {
       });
       res
       .then(()=>{
-        alert('自动付款成功！请耐心等待包裹派送~')
+        console.log('自动付款成功！请耐心等待包裹派送~')
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 
@@ -281,7 +281,7 @@ export default {
         this.commentList = data.commentList;
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 
@@ -291,7 +291,7 @@ export default {
         this.goodsList = data;
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
 

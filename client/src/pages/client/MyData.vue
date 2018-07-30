@@ -87,11 +87,11 @@ export default {
       });
       res
       .then(()=>{
-        alert('修改成功!');
+        console.log('修改成功!');
         this.setClientName(this.nickname);
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
     closePopup(){
@@ -102,7 +102,7 @@ export default {
     },
     updatePwd(){
       if(this.newPwd!==this.confirmPwd){
-        alert('两次输入的密码不一致！');
+        console.log('两次输入的密码不一致！');
         return;
       }
       const res = updatePwd({
@@ -116,10 +116,10 @@ export default {
         this.newPwd = '';
         this.confirmPwd = '';
         this.closePopup();
-        alert('修改密码成功!');
+        console.log('修改密码成功!');
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     }
   },
@@ -137,7 +137,7 @@ export default {
       this.phone = data.phone;    
     })
     .catch((e)=>{
-      alert(e)
+      console.log(e)
     })
   }
 }

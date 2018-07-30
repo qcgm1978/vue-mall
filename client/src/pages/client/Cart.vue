@@ -81,7 +81,7 @@ export default {
         })
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
     numberChange(orderId){
@@ -96,7 +96,7 @@ export default {
       const res = deleteOrder(orderId);
       res
       .then(()=>{
-        alert('删除订单成功！');
+        console.log('删除订单成功！');
         this.orderList.map((item,index)=>{
           if(item.id===orderId){
             this.orderList.splice(index,1);
@@ -104,7 +104,7 @@ export default {
         })
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
     navTo(route){
@@ -124,11 +124,11 @@ export default {
       });
       res
       .then(()=>{
-        alert('下单成功！');
+        console.log('下单成功！');
         this.orderList = [];
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     }
   },

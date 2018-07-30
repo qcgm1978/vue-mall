@@ -71,7 +71,7 @@ export default {
         this.goodsList = data;
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
     searchGoods(keyword){
@@ -80,7 +80,7 @@ export default {
         this.goodsList = data;
       })
       .catch((e)=>{
-        alert(e);
+        console.log(e);
       })
     },
     changeSortMode(mode){

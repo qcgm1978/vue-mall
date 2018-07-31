@@ -1,3 +1,4 @@
+const WXPay = require("weixin-pay");
 const GoodsDetailModel = require('../models/GoodsDetailModel.js');
 const GoodsModel = require('../models/GoodsModel.js');
 const TypeModel = require('../models/TypeModel.js');
@@ -226,7 +227,7 @@ exports.addOrder = async (ctx) => {
 	const token = ctx.request.body.token;
 	try {
 		// ctx.request.body.state = 1
-		console.log(typeof ctx.request.body.state);
+		// console.log(typeof ctx.request.body.state);
 		const res = OrderModel.create({
 			userId: jwt.verify(token, 'chambers'),
 			goodsDetailId: ctx.request.body.goodsDetailId,
@@ -471,7 +472,49 @@ exports.pay = async (ctx) => {
 		}
 	}
 }
+// request wechat payment
+exports.payByWechat = async (ctx) => {
+	const orderId = ctx.query.id;
+	try {
+		var wxpay = WXPay({
+			appid: "wx00d1d53802723dab",
+			mch_id: "1234567890",
+			partner_key: "xxxxxxxxxxxxxxxxx", //微信商户平台API密钥
+			// pfx: fs.readFileSync("./wxpay_cert.p12") //微信商户平台证书
+		});
 
+		ctx.res.body = await new Promise((resolve, reject) => {
+			wxpay.createUnifiedOrder(
+				{
+					body: "扫码支付测试",
+					out_trade_no:
+						"20140703" +
+						Math.random()
+							.toString()
+							.substr(2, 10),
+					total_fee: 1,
+					spbill_create_ip: "192.168.2.210",
+					notify_url: "http://wxpay_notify_url",
+					trade_type: "NATIVE",
+					product_id: "1234567890"
+				},
+				function (err, result) {
+					console.log(result);
+					reject({
+						code: 10000,
+						message: result
+					});
+				}
+			);
+		});
+	}
+	catch (e) {
+		ctx.body = {
+			code: 10000,
+			message: e.message
+		}
+	}
+}
 //购物车结算
 exports.settleAccounts = async (ctx) => {
 	let cartList = ctx.request.body.cartList;

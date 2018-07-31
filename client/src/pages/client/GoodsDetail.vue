@@ -102,293 +102,315 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import {getGoodsInfo,getGoodsMsg,askGoodsMsg,addOrder,getComment,getGoodsList} from '../../api/client';
-import NumberInput from '../../components/NumberInput';
-import Radio from '../../components/Radio';
-import GoodsItem from '../../components/GoodsItem';
+import { mapState } from "vuex";
+import {
+  getGoodsInfo,
+  getGoodsMsg,
+  askGoodsMsg,
+  addOrder,
+  payByWechat,
+  getComment,
+  getGoodsList
+} from "../../api/client";
+import NumberInput from "../../components/NumberInput";
+import Radio from "../../components/Radio";
+import GoodsItem from "../../components/GoodsItem";
 
 export default {
-  name: 'GoodsDetail',
-  components:{
+  name: "GoodsDetail",
+  components: {
     NumberInput,
     Radio,
     GoodsItem
   },
-  computed:{
-    ...mapState([
-      'clientToken',
-      'clientName'
-    ]),
-    id(){
+  computed: {
+    ...mapState(["clientToken", "clientName"]),
+    id() {
       return this.$route.params.id;
     },
-    goodsPrice(){
-      let unitPrice = 0; 
-      this.specs.map((item,index)=>{
-        if(item.id===this.temSpecId){
+    goodsPrice() {
+      let unitPrice = 0;
+      this.specs.map((item, index) => {
+        if (item.id === this.temSpecId) {
           unitPrice = Number(item.unitPrice);
         }
-      })
-      return (this.num*unitPrice);
+      });
+      return this.num * unitPrice;
     },
-    temStockNum(){
-      let stockNum = 0; 
-      this.specs.map((item,index)=>{
-        if(item.id===this.temSpecId){
+    temStockNum() {
+      let stockNum = 0;
+      this.specs.map((item, index) => {
+        if (item.id === this.temSpecId) {
           stockNum = Number(item.stockNum);
         }
-      })
+      });
       return stockNum;
     },
-    filterList(){
-      return this.goodsList.filter((item)=>{
-        return String(item.id)!==String(this.id);
-      })
+    filterList() {
+      return this.goodsList.filter(item => {
+        return String(item.id) !== String(this.id);
+      });
     }
   },
-  data () {
+  data() {
     return {
-      goodsImg:'',
-      goodsName:'',
-      goodsDesc:'',
-      specs:[],
-      typeId:'',
-      temSpecId:0,
-      num:1,
-      msgList:[],
-      askContent:'',
-      tagList:['评价','商品问答'],
-      curIndex:0,
-      rate:'',
-      commentList:[],
-      goodsList:[]
-    }
+      goodsImg: "",
+      goodsName: "",
+      goodsDesc: "",
+      specs: [],
+      typeId: "",
+      temSpecId: 0,
+      num: 1,
+      msgList: [],
+      askContent: "",
+      tagList: ["评价", "商品问答"],
+      curIndex: 0,
+      rate: "",
+      commentList: [],
+      goodsList: []
+    };
   },
 
-  methods:{
-    changeIndex(i){
+  methods: {
+    changeIndex(i) {
       this.curIndex = i;
     },
 
-    getGoodsInfo(id){
+    getGoodsInfo(id) {
       const res = getGoodsInfo(id);
       res
-      .then((data)=>{
-        this.goodsImg = data.img;
-        this.goodsName = data.name;
-        this.goodsDesc = data.desc;
-        this.specs = data.specs;
-        this.typeId = data.typeId;
-        this.temSpecId = data.specs[0].id;
-        this.getTypeGoodsList(data.typeId);
-      })
-      .catch((e)=>{
-        console.log(e);
-      })
+        .then(data => {
+          this.goodsImg = data.img;
+          this.goodsName = data.name;
+          this.goodsDesc = data.desc;
+          this.specs = data.specs;
+          this.typeId = data.typeId;
+          this.temSpecId = data.specs[0].id;
+          this.getTypeGoodsList(data.typeId);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
 
-    getGoodsMsg(id){
+    getGoodsMsg(id) {
       const res = getGoodsMsg(id);
       res
-      .then((data)=>{
-        this.msgList=data
-      })
-      .catch((e)=>{
-        console.log(e);
-      })
+        .then(data => {
+          this.msgList = data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
 
-    postAsk(){
-      if(this.askContent.trim().length<=0){
+    postAsk() {
+      if (this.askContent.trim().length <= 0) {
         return;
       }
       const res = askGoodsMsg({
-        token:this.clientToken,
-        msg:this.askContent,
-        goodsId:this.id,
+        token: this.clientToken,
+        msg: this.askContent,
+        goodsId: this.id
       });
       res
-      .then(()=>{
-        let time = new Date();
-        this.msgList.unshift({
-          id:'new',
-          content:this.askContent,
-          state:0,
-          asker:this.clientName,
-          time:time.getMonth()+1+'-'+time.getDate(),
-          reply:{}
+        .then(() => {
+          let time = new Date();
+          this.msgList.unshift({
+            id: "new",
+            content: this.askContent,
+            state: 0,
+            asker: this.clientName,
+            time: time.getMonth() + 1 + "-" + time.getDate(),
+            reply: {}
+          });
+          this.askContent = "";
+        })
+        .catch(e => {
+          console.log(e);
         });
-        this.askContent = '';
-      })
-      .catch((e)=>{
-        console.log(e);
-      })
     },
 
-    addToCart(){
-      if(!this.clientToken){
-        console.log('请先登录！');
+    addToCart() {
+      if (!this.clientToken) {
+        console.log("请先登录！");
         return;
       }
       const res = addOrder({
-        token:this.clientToken,
-        goodsDetailId:this.temSpecId,
-        state:0,
-        num:this.num,
-        amount:this.goodsPrice
+        token: this.clientToken,
+        goodsDetailId: this.temSpecId,
+        state: 0,
+        num: this.num,
+        amount: this.goodsPrice
       });
       res
-      .then(()=>{
-        console.log('加入购物车成功！请前往 个人中心->购物车 结算')
-      })
-      .catch((e)=>{
-        console.log(e);
-      })
+        .then(() => {
+          console.log("加入购物车成功！请前往 个人中心->购物车 结算");
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
 
-    buy(){
-      if(!this.clientToken){
-        console.log('请先登录！');
+    buy() {
+      if (!this.clientToken) {
+        console.log("请先登录！");
         return;
       }
-      const res = addOrder({
-        token:this.clientToken,
-        goodsDetailId:this.temSpecId,
-        num:this.num,
-        state:1,
-        amount:this.goodsPrice
+      const res = payByWechat({
+        token: this.clientToken,
+        goodsDetailId: this.temSpecId,
+        num: this.num,
+        state: 1,
+        amount: this.goodsPrice
       });
       res
-      .then(()=>{
-        console.log('自动付款成功！请耐心等待包裹派送~')
-      })
-      .catch((e)=>{
-        console.log(e);
-      })
+        .then(() => {
+          console.log("自动付款成功！请耐心等待包裹派送~");
+        })
+        .catch(e => {
+          console.log(e);
+        });
+
+      return;
+
+      // const res = addOrder({
+      //   token: this.clientToken,
+      //   goodsDetailId: this.temSpecId,
+      //   num: this.num,
+      //   state: 1,
+      //   amount: this.goodsPrice
+      // });
+      // res
+      //   .then(() => {
+      //     console.log("自动付款成功！请耐心等待包裹派送~");
+      //   })
+      //   .catch(e => {
+      //     console.log(e);
+      //   });
     },
 
-    getComment(goodsId){
+    getComment(goodsId) {
       const res = getComment(goodsId);
       res
-      .then((data)=>{
-        if(Object.keys(data).length<=0){
-          this.rate = '';
-          this.commentList = [];
-          return;
-        }
-        this.rate = data.rate;
-        this.commentList = data.commentList;
-      })
-      .catch((e)=>{
-        console.log(e);
-      })
+        .then(data => {
+          if (Object.keys(data).length <= 0) {
+            this.rate = "";
+            this.commentList = [];
+            return;
+          }
+          this.rate = data.rate;
+          this.commentList = data.commentList;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
 
-    getTypeGoodsList(typeId){
+    getTypeGoodsList(typeId) {
       const res = getGoodsList(typeId);
-      res.then((data)=>{
-        this.goodsList = data;
-      })
-      .catch((e)=>{
-        console.log(e);
-      })
-    },
-
+      res
+        .then(data => {
+          this.goodsList = data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   },
-  mounted(){
+  mounted() {
     this.getGoodsInfo(this.id);
     this.getGoodsMsg(this.id);
     this.getComment(this.id);
   },
 
-  watch:{
-    $route(to,from){
+  watch: {
+    $route(to, from) {
       this.getGoodsInfo(to.params.id);
       this.getGoodsMsg(to.params.id);
       this.getComment(to.params.id);
     }
   }
-}
+};
 </script>
 
 <style scoped lang="less">
 @import "../../assets/css/var.less";
-.GoodsDetail{
-  .content{
+.GoodsDetail {
+  .content {
     width: 100%;
     padding-top: 20px;
-    .goodsInfo{
+    .goodsInfo {
       width: 100%;
       overflow: hidden;
-      .infoLeft{
+      .infoLeft {
         display: inline-block;
         width: 400px;
         height: 400px;
         float: left;
       }
-      .infoRight{
+      .infoRight {
         display: inline-block;
         float: right;
         width: 700px;
-        .infoBox{
+        .infoBox {
           margin-bottom: 30px;
-          .name{
+          .name {
             font-size: 20px;
           }
-          p{
-            color:@fontDefaultColor;
+          p {
+            color: @fontDefaultColor;
             font-size: 15px;
           }
-          .price{
+          .price {
             font-size: 35px;
-            color:@falseColor;
+            color: @falseColor;
           }
-          span{
-            color:@fontDefaultColor;
+          span {
+            color: @fontDefaultColor;
             font-size: 13px;
             display: inline-block;
             width: 50px;
           }
-          .tips{
+          .tips {
             width: auto;
             margin: 0 20px 0 5px;
           }
-          .NumberInput{
+          .NumberInput {
             display: inline-block;
             vertical-align: middle;
           }
         }
-        button{
+        button {
           background-color: #b4a078;
           width: 170px;
           height: 50px;
-          color:white;
+          color: white;
           border: none;
           font-size: 19px;
           margin-right: 20px;
           margin-top: 10px;
-          &:hover{
-            opacity:0.8;
+          &:hover {
+            opacity: 0.8;
           }
         }
-        .buyBtn{
+        .buyBtn {
           border: 1px solid #b4a078;
-          color:#b4a078;
+          color: #b4a078;
           background-color: #f5f3ef;
         }
       }
     }
-    .msgBox{
+    .msgBox {
       margin: 50px 0;
       border: 1px solid @borderColor;
       padding-top: 0;
-      .tagList{
+      .tagList {
         width: 100%;
         height: 40px;
         border-bottom: 1px solid @borderColor;
         background-color: #f5f5f5;
-        li{
+        li {
           width: 170px;
           height: 42px;
           position: relative;
@@ -398,44 +420,44 @@ export default {
           line-height: 40px;
           font-size: 13px;
           cursor: pointer;
-          &:hover{
-            color:@thirdColor;
+          &:hover {
+            color: @thirdColor;
           }
         }
-        .selected{
+        .selected {
           background-color: white;
           border-top: 4px solid @thirdColor;
         }
       }
-      .commentBody{
+      .commentBody {
         padding: 20px;
         min-height: 300px;
-        .rateBox{
+        .rateBox {
           margin-bottom: 10px;
-          span{
-            color:@fontDefaultColor;
+          span {
+            color: @fontDefaultColor;
             display: inline-block;
             margin-right: 10px;
           }
-          .rate{
-            color:@falseColor;
+          .rate {
+            color: @falseColor;
             font-weight: 600;
             font-size: 30px;
           }
         }
-        .commentList{
+        .commentList {
           width: 100%;
-          li{
+          li {
             width: 100%;
             display: block;
             margin: 0 auto;
-            border-bottom:1px solid @borderColor;
+            border-bottom: 1px solid @borderColor;
             padding: 20px 0;
-            .userInfo{
+            .userInfo {
               width: 80px;
               display: inline-block;
               text-align: center;
-              img{
+              img {
                 margin: auto;
                 display: block;
                 width: 50px;
@@ -443,51 +465,53 @@ export default {
                 border-radius: 50%;
                 margin-bottom: 6px;
               }
-              span{
+              span {
                 font-size: 13px;
-                color:@fontDefaultColor;
+                color: @fontDefaultColor;
               }
             }
-            .commentInfo{
+            .commentInfo {
               display: inline-block;
               vertical-align: top;
-              .starList{
-                i{
-                  color:#f9bd4f;
+              .starList {
+                i {
+                  color: #f9bd4f;
                 }
               }
-              .specName,.time{
-                color:@fontDefaultColor;
+              .specName,
+              .time {
+                color: @fontDefaultColor;
                 font-size: 13px;
                 margin-top: 10px;
               }
-              .comment{
+              .comment {
                 margin-top: 10px;
               }
             }
           }
         }
-        .noComment{
+        .noComment {
           width: 100%;
           text-align: center;
-          color:@thirdColor;
+          color: @thirdColor;
           padding-top: 30px;
         }
       }
-      .msgBody{
+      .msgBody {
         padding: 20px;
         min-height: 300px;
-        .inputBox{
+        .inputBox {
           margin-top: 20px;
-          textarea{
+          textarea {
             width: 88%;
             height: 50px;
             padding: 5px;
-            border:2px solid @borderColor;
+            border: 2px solid @borderColor;
             display: inline-block;
             overflow: hidden;
           }
-          button,.banAsk{
+          button,
+          .banAsk {
             float: right;
             width: 10%;
             height: 50px;
@@ -496,28 +520,29 @@ export default {
             overflow: hidden;
             background-color: white;
             border: 2px solid @fontShallowColor;
-            color:@fontDefaultColor;
+            color: @fontDefaultColor;
           }
-          .banAsk{
+          .banAsk {
             background-color: @fontShallowColor;
             text-align: center;
             font-size: 12px;
             line-height: 50px;
-            color:white;
-            user-select:none;
+            color: white;
+            user-select: none;
           }
         }
-        .msgList{
+        .msgList {
           margin-top: 20px;
-          li{
+          li {
             border-bottom: 1px solid @borderColor;
             padding: 10px 0;
-            .ask,.answer{
+            .ask,
+            .answer {
               margin: 8px 0;
               width: 100%;
-              .note{
+              .note {
                 display: inline-block;
-                color:white;
+                color: white;
                 text-align: center;
                 width: 20px;
                 height: 20px;
@@ -525,22 +550,22 @@ export default {
                 font-size: 10px;
                 line-height: 20px;
               }
-              .text{
+              .text {
                 font-size: 14px;
               }
-              .tipsInfo{
+              .tipsInfo {
                 float: right;
                 font-size: 14px;
-                color:@fontDefaultColor;
+                color: @fontDefaultColor;
               }
             }
-            .ask{
-              .note{
+            .ask {
+              .note {
                 background-color: @falseColor;
               }
             }
-            .answer{
-              .note{
+            .answer {
+              .note {
                 background-color: @mainColor;
               }
             }
@@ -548,11 +573,11 @@ export default {
         }
       }
     }
-    .typeGoods{
+    .typeGoods {
       margin: 50px 0;
       border: 1px solid @borderColor;
       padding-top: 0;
-      .title{
+      .title {
         text-align: center;
         width: 100%;
         height: 40px;
@@ -561,18 +586,18 @@ export default {
         font-weight: 600;
         border-bottom: 1px solid @borderColor;
       }
-      .list{
-        .GoodsItem{
-          display:block;
-          border-bottom:1px dotted @borderColor;
+      .list {
+        .GoodsItem {
+          display: block;
+          border-bottom: 1px dotted @borderColor;
           margin: 0 auto;
         }
       }
     }
   }
-  .ban{
+  .ban {
     user-select: none;
-    cursor:not-allowed;
+    cursor: not-allowed;
   }
 }
 </style>

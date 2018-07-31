@@ -24,7 +24,8 @@ router.delete('/api/mall/deleteOrder', goods.deleteOrder);
 
 //确认付款
 router.get('/api/mall/pay', goods.pay);
-
+// call wechat payment
+router.post('/api/mall/payByWechat', goods.payByWechat);
 //确认收货
 router.get('/api/mall/confirmReceive', goods.confirmReceive);
 

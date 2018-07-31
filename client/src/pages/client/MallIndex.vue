@@ -15,7 +15,7 @@
         <ul class="goodsList" :style="{width:`${(266*goodsList.length)+(10*(goodsList.length-1))}px`}" slot="list">
           <GoodsItem 
             v-for="(item,index) in goodsList" 
-            :style="{marginRight: (index+1)%4===0?'0px':'10px'}"
+            :style="{marginRight: (index+1)%4===0?'0px':'6px'}"
             :key="+item.id"
             :id="item.id"
             :img="item.img"
@@ -71,7 +71,7 @@
         </ul>
         <ul class="right">
            <GoodsItem 
-            v-for="(item,index) in goodsList.slice(3,9)" 
+            v-for="(item,index) in goodsList.slice(0,6)" 
             :style="{marginBottom: index<=2?'10px':'0px'}"
             :key="+item.id"
             :id="item.id"

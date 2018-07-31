@@ -193,7 +193,7 @@ exports.getGoodsMsg = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络错误'
+			message: e.message
 		}
 	}
 }
@@ -225,6 +225,8 @@ exports.askGoodsMsg = async (ctx) => {
 exports.addOrder = async (ctx) => {
 	const token = ctx.request.body.token;
 	try {
+		// ctx.request.body.state = 1
+		console.log(typeof ctx.request.body.state);
 		const res = OrderModel.create({
 			userId: jwt.verify(token, 'chambers'),
 			goodsDetailId: ctx.request.body.goodsDetailId,
@@ -672,7 +674,7 @@ exports.searchGoods = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络错误'
+			message: e.message
 		}
 	}
 }

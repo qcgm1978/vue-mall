@@ -134,7 +134,7 @@ exports.getData = async (ctx) => {
   } catch (e) {
     ctx.body = {
       code: 10000,
-      message: '网络错误'
+      message: e.message
     }
   }
 }

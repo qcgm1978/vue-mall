@@ -48,7 +48,7 @@ exports.login = async (ctx)=>{
     catch(e){
       ctx.body = {
         code:10000,
-        message:'网络出错'
+        message:e.message
       }
     }
 }
@@ -88,7 +88,7 @@ exports.changePwd = async (ctx)=>{
     catch(e){
       ctx.body = {
         code:10000,
-        message:'网络出错'
+        message:e.message
       }
     }
 }
@@ -108,7 +108,7 @@ exports.getAllUser = async (ctx)=>{
     catch(e){
       ctx.body = {
         code:10000,
-        message:'网络出错'
+        message:e.message
       }
     }
 }
@@ -129,7 +129,7 @@ exports.deleteUser = async (ctx)=>{
   catch(e){
     ctx.body = {
       code:10000,
-      message:'网络出错'
+      message:e.message
     }
   }
 }
@@ -158,7 +158,7 @@ exports.searchUser = async (ctx)=>{
   catch(e){
     ctx.body = {
       code:10000,
-      message:'网络出错'
+      message:e.message
     }
   }
 }

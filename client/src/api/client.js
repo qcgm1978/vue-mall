@@ -81,6 +81,7 @@ export function getGoodsList(typeId) {
 	return new Promise((resolve, reject) => {
 		res
 			.then((result) => {
+				debugger;
 				if (result.status === 200) {
 					return result.data;
 				} else {

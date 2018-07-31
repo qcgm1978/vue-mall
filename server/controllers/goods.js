@@ -215,7 +215,7 @@ exports.askGoodsMsg = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -261,7 +261,7 @@ exports.addOrder = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -356,7 +356,7 @@ exports.getOrderByState = async (ctx) => {
 		console.log(e);
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -413,7 +413,7 @@ exports.deleteOrder = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -439,7 +439,7 @@ exports.confirmReceive = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -465,7 +465,7 @@ exports.pay = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -517,7 +517,7 @@ exports.settleAccounts = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -541,7 +541,7 @@ exports.sendComment = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -618,7 +618,7 @@ exports.getGoodsComment = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }

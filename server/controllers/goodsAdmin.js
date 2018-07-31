@@ -64,7 +64,7 @@ exports.addType = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -95,7 +95,7 @@ exports.getGoodsInfo = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -130,7 +130,7 @@ exports.addGoods = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -156,7 +156,7 @@ exports.addSpec = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -179,7 +179,7 @@ exports.deleteSpec = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -222,7 +222,7 @@ exports.updateGoods = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }
@@ -248,7 +248,7 @@ exports.deleteGoods = async (ctx) => {
 	catch (e) {
 		ctx.body = {
 			code: 10000,
-			message: '网络出错'
+			message: e.message
 		}
 	}
 }

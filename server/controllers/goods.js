@@ -52,13 +52,16 @@ exports.getGoodsByType = async (ctx) => {
 					goodsId: item.dataValues.id
 				}
 			});
-			goodsList.push({
-				id: item.dataValues.id,
-				img: item.dataValues.img,
-				name: item.dataValues.name,
-				price: spec.unitPrice,
-				typeId: item.dataValues.typeId
-			})
+			if (spec) {
+
+				goodsList.push({
+					id: item.dataValues.id,
+					img: item.dataValues.img,
+					name: item.dataValues.name,
+					price: spec.unitPrice,
+					typeId: item.dataValues.typeId
+				})
+			}
 		};
 		ctx.body = {
 			code: 0,

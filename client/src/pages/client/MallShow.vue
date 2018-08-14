@@ -16,7 +16,7 @@
       </div>
     </FixedNav>
     <div class="logo">
-      <img src="../../assets/img/jihuibaologo@3x.png" style='width: 107px;margin-top: 10px;margin-left: 0px;position: absolute;left: 30px;'/>
+      <img src="../../assets/img/jihuibaologo@3x 2.png" style='width: 67px;margin-top: 29px;position: absolute;left: 70px;'/>
       <img src="../../assets/img/index1.gif"/>
       <div class="searchBox">
         <TipsInput

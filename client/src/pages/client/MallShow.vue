@@ -16,6 +16,7 @@
       </div>
     </FixedNav>
     <div class="logo">
+      <img src="../../assets/img/jihuibaologo@3x.png" style="width: 107px;margin-top: 10px;"/>
       <img src="../../assets/img/index1.gif"/>
       <div class="searchBox">
         <TipsInput
@@ -43,150 +44,148 @@
 </template>
 
 <script>
-import {getTypes,getGoodsList} from '../../api/client';
-import TipsInput from '../../components/TipsInput';
-import FixedNav from '../../components/FixedNav';
+import { getTypes, getGoodsList } from "../../api/client";
+import TipsInput from "../../components/TipsInput";
+import FixedNav from "../../components/FixedNav";
 
 export default {
-  name: 'MallShow',
-  components:{
+  name: "MallShow",
+  components: {
     TipsInput,
-    FixedNav,
+    FixedNav
   },
-  computed:{
-    curPath(){
+  computed: {
+    curPath() {
       return this.$route.path;
     }
   },
-  data () {
+  data() {
     return {
-      typeList:[],
-      searchText:'',
-      tips:['aa','bb','cc'],
-      navShouldFixed:false,
-    }
+      typeList: [],
+      searchText: "",
+      tips: ["aa", "bb", "cc"],
+      navShouldFixed: false
+    };
   },
 
-  methods:{
-    navTo(route){
+  methods: {
+    navTo(route) {
       this.$router.push(route);
     },
-    judgeCurPath(typeId){
-      if(typeId===-1){
-        if(this.curPath.indexOf('/show/index')>-1){
+    judgeCurPath(typeId) {
+      if (typeId === -1) {
+        if (this.curPath.indexOf("/show/index") > -1) {
           return true;
-        }else{
+        } else {
           return false;
         }
-      }else{
-        if(this.curPath.indexOf(`/show/goodsList/${typeId}`)>-1){
+      } else {
+        if (this.curPath.indexOf(`/show/goodsList/${typeId}`) > -1) {
           return true;
-        }else{
+        } else {
           return false;
         }
       }
     },
-    selectType(typeId){
+    selectType(typeId) {
       //首页
-      if(typeId===-1){
-        this.navTo('/mall/show/index');
-      }else{
-        this.navTo('/mall/show/goodsList/'+typeId+'/all');
+      if (typeId === -1) {
+        this.navTo("/mall/show/index");
+      } else {
+        this.navTo("/mall/show/goodsList/" + typeId + "/all");
       }
     },
-    searchTip(tip){
-      console.log(tip)
+    searchTip(tip) {
+      console.log(tip);
     },
-    searchTextChange(text){
-    },
-    searchConfirm(){
-      if(this.searchText.trim().length<=0){
-        console.log('输入不能为空！');
+    searchTextChange(text) {},
+    searchConfirm() {
+      if (this.searchText.trim().length <= 0) {
+        console.log("输入不能为空！");
         return;
       }
       this.navTo(`/mall/show/goodsList/0/${this.searchText}`);
     },
-    scrollHandle(){
+    scrollHandle() {
       const top = this.$refs.typeList.getBoundingClientRect().top;
       //还未到顶
-      if(top>0){
-        this.navShouldFixed=false;
-      }
-      //已经到顶
-      else{
-        this.navShouldFixed=true;
+      if (top > 0) {
+        this.navShouldFixed = false;
+      } else {
+        //已经到顶
+        this.navShouldFixed = true;
       }
     }
   },
 
-  mounted(){
+  mounted() {
     //获取数据
     const res = getTypes();
     res
-    .then((data)=>{
-      data.unshift({
-        id:-1,
-        name:'首页'
+      .then(data => {
+        data.unshift({
+          id: -1,
+          name: "首页"
+        });
+        this.typeList = data;
+      })
+      .catch(e => {
+        console.log(e);
       });
-      this.typeList = data;
-    })
-    .catch((e)=>{
-      console.log(e);
-    });
 
     //监听滚动事件
-    document.addEventListener('scroll',this.scrollHandle,false);
+    document.addEventListener("scroll", this.scrollHandle, false);
   },
 
-  destroyed(){
-    document.removeEventListener('scroll',this.scrollHandle,false);
+  destroyed() {
+    document.removeEventListener("scroll", this.scrollHandle, false);
   },
-  watch:{
-    searchText(newVal,oldVal){
+  watch: {
+    searchText(newVal, oldVal) {
       this.searchTextChange(newVal);
     }
   }
-}
+};
 </script>
 
 <style scoped lang="less">
 @import "../../assets/css/var.less";
-.MallShow{
+.MallShow {
   width: 100%;
-  .logo{
+  .logo {
     display: block;
     margin: -10px auto 30px;
     text-align: right;
-    user-select:none;
+    user-select: none;
     vertical-align: middle;
-    img{
+    img {
       display: inline-block;
       width: 33.3%;
-    vertical-align: middle;
+      vertical-align: middle;
     }
-    .searchBox{
+    .searchBox {
       display: inline-block;
       width: 33.3%;
       vertical-align: middle;
       text-align: left;
-      .TipsInput{
+      .TipsInput {
         margin-left: 30px;
       }
-      .icon-search{
+      .icon-search {
         font-size: 24px;
         font-weight: bold;
-        color:@thirdColor;
+        color: @thirdColor;
         cursor: pointer;
         position: relative;
         top: 4px;
       }
     }
   }
-  .typeList{
+  .typeList {
     width: 100%;
     text-align: center;
     background-color: white;
-    li{
+    li {
       display: inline-block;
       width: 60px;
       margin: 0 50px;
@@ -197,31 +196,31 @@ export default {
       font-size: 14px;
       cursor: pointer;
     }
-    .selected{
-      color:@thirdColor;
+    .selected {
+      color: @thirdColor;
       border-bottom: 3px solid @thirdColor;
     }
   }
-    .fixedNavContainer{
+  .fixedNavContainer {
     text-align: left;
-    .fixedLeft{
+    .fixedLeft {
       display: inline-block;
       vertical-align: middle;
       width: 15%;
       height: 100%;
-      font-size:30px;
-      color:@thirdColor;
+      font-size: 30px;
+      color: @thirdColor;
       user-select: none;
       line-height: 64px;
       text-align: center;
       cursor: pointer;
     }
-    .fixedRight{
+    .fixedRight {
       width: 70%;
       height: 100%;
       display: inline-block;
       vertical-align: middle;
-      li{
+      li {
         display: inline-block;
         width: 60px;
         margin: 0 30px;
@@ -234,8 +233,8 @@ export default {
         position: relative;
         top: 4px;
       }
-      .selected{
-        color:@thirdColor;
+      .selected {
+        color: @thirdColor;
         border-bottom: 3px solid @thirdColor;
       }
     }
